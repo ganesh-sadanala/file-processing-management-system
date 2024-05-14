@@ -1,0 +1,2678 @@
+---
+Metadata:
+  TemplateId: "arn:aws:cloudformation:us-east-2:730335631898:generatedTemplate/462fc48f-2e8d-44e0-b9a7-325ab7857733"
+Parameters:
+  LambdaFunction00generatePreSignedUrl00Kq89KCodeS3KeyOneOfOwfOx:
+    NoEcho: "true"
+    Type: "String"
+    Description: "The Amazon S3 key of the deployment package.\nThis property can\
+      \ be replaced with other exclusive properties"
+  LambdaFunction00appcreatevm00TW0kJCodeS3BucketOneOf8DMQW:
+    NoEcho: "true"
+    Type: "String"
+    Description: "An Amazon S3 bucket in the same AWS-Region as your function. The\
+      \ bucket can be in a different AWS-account.\nThis property can be replaced with\
+      \ other exclusive properties"
+  LambdaFunction00fileUpload008FprECodeS3BucketOneOfi6zSR:
+    NoEcho: "true"
+    Type: "String"
+    Description: "An Amazon S3 bucket in the same AWS-Region as your function. The\
+      \ bucket can be in a different AWS-account.\nThis property can be replaced with\
+      \ other exclusive properties"
+  LambdaFunction00fileUpload008FprECodeS3KeyOneOfGbWL4:
+    NoEcho: "true"
+    Type: "String"
+    Description: "The Amazon S3 key of the deployment package.\nThis property can\
+      \ be replaced with other exclusive properties"
+  LambdaFunction00generatePreSignedUrl00Kq89KCodeS3BucketOneOfBkTWe:
+    NoEcho: "true"
+    Type: "String"
+    Description: "An Amazon S3 bucket in the same AWS-Region as your function. The\
+      \ bucket can be in a different AWS-account.\nThis property can be replaced with\
+      \ other exclusive properties"
+  LambdaFunction00appcreatevm00TW0kJCodeS3KeyOneOfAHUvY:
+    NoEcho: "true"
+    Type: "String"
+    Description: "The Amazon S3 key of the deployment package.\nThis property can\
+      \ be replaced with other exclusive properties"
+Resources:
+  LogsLogStream0020240512LATEST47aed2d9c60c4013a9111cd1a176e82500YUbrl:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]47aed2d9c60c4013a9111cd1a176e825"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudWatchAlarm00TargetTrackingtableMyFileAlarmLoweb9a16747977472198ebd2535cd134f700e0jPv:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 15
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876"
+      MetricName: "ConsumedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876."
+      AlarmName: "TargetTracking-table/MyFile-AlarmLow-eb9a1674-7977-4721-98eb-d2535cd134f7"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 30
+  IAMManagedPolicy00policyserviceroleAWSLambdaBasicExecutionRolec329be63827845d8a9bb9f7d9554f64500YCPYo:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSLambdaBasicExecutionRole-c329be63-8278-45d8-a9bb-9f7d9554f645"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:logs:us-east-2:730335631898:*"
+          Action: "logs:CreateLogGroup"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:logs:us-east-2:730335631898:log-group:/aws/lambda/fileUpload:*"
+          Action:
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00fileUploadrolejqlf7p1o00ezfLw"
+      Users: []
+  LogsLogStream0020240513LATESTdf682b98a31649bb931c9cd58a950a8200x0J8j:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]df682b98a31649bb931c9cd58a950a82"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  EC2VPC00vpc01d85ce25a046129700STYNy:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Delete"
+    Properties:
+      CidrBlock: "10.1.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: false
+      Tags:
+      - Value: "app-vpc"
+        Key: "Name"
+  LogsLogStream0020240513LATEST97d8ff3ee3ed48bdb60b38cc0ff8c4bd00Fy48Y:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]97d8ff3ee3ed48bdb60b38cc0ff8c4bd"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST2e39013ea00545ce9f9f2df96c6d706400rTIBk:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]2e39013ea00545ce9f9f2df96c6d7064"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST49367b83866c42108b2cc6b258009ee40005t9v:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]49367b83866c42108b2cc6b258009ee4"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATESTf0e414153ae244a6b60f51538af2e48a007ksPg:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]f0e414153ae244a6b60f51538af2e48a"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240513LATESTd535b1f32bff4ec29a208df64ff4df4900vM0Qc:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]d535b1f32bff4ec29a208df64ff4df49"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240513LATESTeb2b9a5afdb441a2b7ccb339ff5de18b00SNGfW:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]eb2b9a5afdb441a2b7ccb339ff5de18b"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  EC2SecurityGroup00sg047c6e708d8c2cd5500hmNgM:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      GroupDescription: "Security Group for my EC2"
+      GroupName: "MyEc2SecurityGroup"
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      SecurityGroupIngress:
+      - CidrIp: "18.238.192.39/32"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      - CidrIp: "18.238.192.42/32"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      - CidrIp: "18.238.192.29/32"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      - CidrIp: "18.238.192.77/32"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+  LambdaEventSourceMapping0090fc8ce8bccd41da8ea0fc9dfb2129e300Y0ogd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::EventSourceMapping"
+    DeletionPolicy: "Delete"
+    Properties:
+      StartingPosition: "LATEST"
+      BatchSize: 1
+      FunctionName:
+        Fn::GetAtt:
+        - "LambdaFunction00appcreatevm00TW0kJ"
+        - "Arn"
+      TumblingWindowInSeconds: 0
+      MaximumRetryAttempts: -1
+      BisectBatchOnFunctionError: false
+      ParallelizationFactor: 1
+      MaximumRecordAgeInSeconds: -1
+      Enabled: true
+      EventSourceArn:
+        Fn::GetAtt:
+        - "DynamoDBTable00fileupload00G6Fu3"
+        - "StreamArn"
+      MaximumBatchingWindowInSeconds: 0
+  LambdaFunction00generatePreSignedUrl00Kq89K:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::Function"
+    DeletionPolicy: "Delete"
+    Properties:
+      MemorySize: 128
+      Description: ""
+      TracingConfig:
+        Mode: "PassThrough"
+      Timeout: 30
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: "Auto"
+      Handler: "index.handler"
+      Code:
+        S3Bucket:
+          Ref: "LambdaFunction00generatePreSignedUrl00Kq89KCodeS3BucketOneOfBkTWe"
+        S3Key:
+          Ref: "LambdaFunction00generatePreSignedUrl00Kq89KCodeS3KeyOneOfOwfOx"
+      Role:
+        Fn::GetAtt:
+        - "IAMRole00generatePreSignedUrlroledcil00rj00J1lMh"
+        - "Arn"
+      FileSystemConfigs: []
+      FunctionName: "generatePreSignedUrl"
+      Runtime: "nodejs20.x"
+      PackageType: "Zip"
+      LoggingConfig:
+        LogFormat: "Text"
+        LogGroup: "/aws/lambda/generatePreSignedUrl"
+      EphemeralStorage:
+        Size: 512
+      Architectures:
+      - "x86_64"
+  MemoryDBParameterGroup00defaultmemorydbredis7searchpreview00GH4Z0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis7.search.preview"
+      Family: "memorydb_redis7.search.preview"
+      Description: "Default parameter group for memorydb_redis7.search.preview"
+  LogsLogStream0020240512LATEST85e0e693dcb74d4ca53775f5290f46e000CUZIn:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]85e0e693dcb74d4ca53775f5290f46e0"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LambdaPermission00functiongeneratePreSignedUrl00RSEeC:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::Permission"
+    DeletionPolicy: "Delete"
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - "LambdaFunction00generatePreSignedUrl00Kq89K"
+        - "Arn"
+      Action: "lambda:InvokeFunction"
+      SourceArn: "arn:aws:execute-api:us-east-2:730335631898:hipdom6t3b/*/POST/generate-pre-signed-url"
+      Principal: "apigateway.amazonaws.com"
+  DynamoDBTable00MyFile00jlovs:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::DynamoDB::Table"
+    DeletionPolicy: "Delete"
+    Properties:
+      SSESpecification:
+        SSEEnabled: false
+      TableName: "MyFile"
+      AttributeDefinitions:
+      - AttributeType: "S"
+        AttributeName: "id"
+      ContributorInsightsSpecification:
+        Enabled: false
+      BillingMode: "PROVISIONED"
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false
+      ProvisionedThroughput:
+        WriteCapacityUnits: 1
+        ReadCapacityUnits: 1
+      KeySchema:
+      - KeyType: "HASH"
+        AttributeName: "id"
+      DeletionProtectionEnabled: false
+      TableClass: "STANDARD"
+      Tags: []
+      TimeToLiveSpecification:
+        Enabled: false
+  EC2Subnet00subnet004c63a5f3a2e141a00cUFW0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Delete"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az1"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.1.1.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "Public Subnet"
+        Key: "Name"
+  ApiGatewayDeployment004ax1b100RDbGd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Deployment"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi00hipdom6t3b003eqtt"
+      Description: "Created by AWS Lambda"
+  LogsLogStream0020240512LATEST4d3e26eaab854a01aa326153b991e01700yrII4:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]4d3e26eaab854a01aa326153b991e017"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  IAMRole00AWSServiceRoleForApplicationAutoScalingDynamoDBTable00pSADF:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/aws-service-role/dynamodb.application-autoscaling.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSApplicationAutoscalingDynamoDBTablePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "dynamodb.application-autoscaling.amazonaws.com"
+  LogsLogStream0020240512LATESTefc2b460b1a14e09b49a1c343779c45c00sVhtL:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]efc2b460b1a14e09b49a1c343779c45c"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  ApiGatewayStage00default00B51TK:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Stage"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi007uv3zpxu8300x0SOG"
+      DeploymentId:
+        Fn::GetAtt:
+        - "ApiGatewayDeployment00fdsnni00hEypY"
+        - "DeploymentId"
+      StageName: "default"
+      CacheClusterSize: "0.5"
+      TracingEnabled: false
+      CacheClusterEnabled: false
+  IAMRole00AWSServiceRoleForAPIGateway00FH33q:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/aws-service-role/ops.apigateway.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/APIGatewayServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAPIGateway"
+      Description: "The Service Linked Role is used by Amazon API Gateway."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ops.apigateway.amazonaws.com"
+  EC2VPCDHCPOptionsAssociation00vpc01d85ce25a046129700WC9gm:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+    DeletionPolicy: "Delete"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      DhcpOptionsId:
+        Ref: "EC2DHCPOptions00dopt07691470e1f5eed6b00rlWR1"
+  LogsLogStream0020240512LATESTe679e1039c934489a4bac4fb643917fd00UN8aZ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]e679e1039c934489a4bac4fb643917fd"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  EC2InternetGateway00igw0a84e21512f8df69400CdLsv:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::InternetGateway"
+    DeletionPolicy: "Delete"
+    Properties:
+      Tags:
+      - Value: "app-igw"
+        Key: "Name"
+  LogsLogStream0020240512LATESTf4752f7219344b098e5e890fbd6316290010sZ1:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]f4752f7219344b098e5e890fbd631629"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  ApiGatewayStage00default004gKdJ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Stage"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi00hipdom6t3b003eqtt"
+      DeploymentId:
+        Fn::GetAtt:
+        - "ApiGatewayDeployment00be7ezv008Vu6Y"
+        - "DeploymentId"
+      Description: "Created by AWS Lambda"
+      StageName: "default"
+      TracingEnabled: false
+      CacheClusterEnabled: false
+  EC2NetworkInterface00eni0a829a32716b2828800yuU8v:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Delete"
+    Properties:
+      Description: "Instance Connect Endpoint (id: eice-038b8099520c3389b)"
+      PrivateIpAddress: "10.1.1.95"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.1.1.95"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-047c6e708d8c2cd55"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet004c63a5f3a2e141a00cUFW0"
+      SourceDestCheck: false
+      InterfaceType: "null"
+      Tags:
+      - Value: "eice-038b8099520c3389b"
+        Key: "InstanceConnectEndpointId"
+  ApiGatewayDeployment00fdsnni00hEypY:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Deployment"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi007uv3zpxu8300x0SOG"
+  LogsLogStream0020240512LATEST13c87e1f0fa344b6b2a45f9dcc39677600bURAA:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]13c87e1f0fa344b6b2a45f9dcc396776"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  ApiGatewayRestApi007uv3zpxu8300x0SOG:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::RestApi"
+    DeletionPolicy: "Delete"
+    Properties:
+      ApiKeySourceType: "HEADER"
+      EndpointConfiguration:
+        Types:
+        - "REGIONAL"
+      DisableExecuteApiEndpoint: false
+      Name: "FileUploadAPI"
+  LogsLogStream0020240513LATEST335214ccd9854a4f9e004a41c272ccec00V5xgK:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]335214ccd9854a4f9e004a41c272ccec"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  S3Bucket00fileappbucket001NCbT:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Delete"
+    Properties:
+      AccelerateConfiguration:
+        AccelerationStatus: "Enabled"
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        BlockPublicAcls: true
+      BucketName: "fileappbucket"
+      CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders:
+          - "*"
+          AllowedMethods:
+          - "GET"
+          - "PUT"
+          - "POST"
+          - "DELETE"
+          AllowedOrigins:
+          - "*"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: true
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "AES256"
+      VersioningConfiguration:
+        Status: "Enabled"
+  LogsLogStream0020240513LATEST138abc76e95543b7b419e47346fca0a000mNqjq:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]138abc76e95543b7b419e47346fca0a0"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudFrontOriginRequestPolicy0059781a5b390341f3afcbaf62929ccde100bFCJ6:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy for custom origin with CORS"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-CORS-CustomOrigin"
+  LogsLogStream0020240511LATEST3394a3bfa3584130823a8f37043530eb00KW9P2:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/11/[$LATEST]3394a3bfa3584130823a8f37043530eb"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST5abf893bd4bf4d778c9b81c88199689100x08CH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]5abf893bd4bf4d778c9b81c881996891"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  EC2DHCPOptions00dopt07691470e1f5eed6b00rlWR1:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::DHCPOptions"
+    DeletionPolicy: "Delete"
+    Properties:
+      DomainName: "us-east-2.compute.internal"
+      DomainNameServers:
+      - "AmazonProvidedDNS"
+      Tags: []
+  LogsLogStream0020240513LATESTc816d6babb414a50880295addae457dc00SEu5x:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]c816d6babb414a50880295addae457dc"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240513LATESTb662ef36464241c58c4ef6dc8262bd1f00CcIHz:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]b662ef36464241c58c4ef6dc8262bd1f"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LambdaPermission00functionfileUpload00SFBAm:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::Permission"
+    DeletionPolicy: "Delete"
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - "LambdaFunction00fileUpload008FprE"
+        - "Arn"
+      Action: "lambda:InvokeFunction"
+      SourceArn: "arn:aws:execute-api:us-east-2:730335631898:7uv3zpxu83/*/POST/upload"
+      Principal: "apigateway.amazonaws.com"
+  DynamoDBTable00fileupload00G6Fu3:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::DynamoDB::Table"
+    DeletionPolicy: "Delete"
+    Properties:
+      SSESpecification:
+        SSEEnabled: false
+      StreamSpecification:
+        StreamViewType: "NEW_AND_OLD_IMAGES"
+      ContributorInsightsSpecification:
+        Enabled: false
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false
+      ProvisionedThroughput:
+        WriteCapacityUnits: 1
+        ReadCapacityUnits: 1
+      TableName: "file-upload"
+      AttributeDefinitions:
+      - AttributeType: "S"
+        AttributeName: "id"
+      BillingMode: "PROVISIONED"
+      KeySchema:
+      - KeyType: "HASH"
+        AttributeName: "id"
+      DeletionProtectionEnabled: false
+      TableClass: "STANDARD"
+      Tags: []
+      TimeToLiveSpecification:
+        Enabled: false
+  LogsLogStream0020240512LATESTedc14b74757f49e4aa235e997411b4bd008fq2u:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]edc14b74757f49e4aa235e997411b4bd"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  CloudWatchAlarm00TargetTrackingtablefileuploadAlarmLowd5d59949b1f741cea322f70294d3913600GWcZg:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 15
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317"
+      MetricName: "ConsumedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317."
+      AlarmName: "TargetTracking-table/file-upload-AlarmLow-d5d59949-b1f7-41ce-a322-f70294d39136"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 30
+  CloudWatchAlarm00TargetTrackingtablefileuploadProvisionedCapacityLow761602f9653e4374b4ad692d562a4e3700TMfxJ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317"
+      MetricName: "ProvisionedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317."
+      AlarmName: "TargetTracking-table/file-upload-ProvisionedCapacityLow-761602f9-653e-4374-b4ad-692d562a4e37"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  CloudWatchAlarm00TargetTrackingtableMyFileProvisionedCapacityLow6d6e1832d0254ae29d1854b159b4b45500L8g3r:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07"
+      MetricName: "ProvisionedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07."
+      AlarmName: "TargetTracking-table/MyFile-ProvisionedCapacityLow-6d6e1832-d025-4ae2-9d18-54b159b4b455"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc01d85ce25a0461297internetresolver002AupU:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Route53Resolver::ResolverRuleAssociation"
+    DeletionPolicy: "Delete"
+    Properties:
+      VPCId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      ResolverRuleId: "rslvr-autodefined-rr-internet-resolver"
+      Name: "System Rule Association"
+  EC2RouteTable00rtb0256ca3de49f4fb1a00yIpUj:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Delete"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+  LogsLogStream0020240512LATESTdedd800dbee6423f81dfc4706aff787d00ArXcn:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]dedd800dbee6423f81dfc4706aff787d"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  IAMManagedPolicy00policyAWSEC2S3Access00IM3E8:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSEC2S3Access"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:s3:::fileappbucket"
+          - "arn:aws:s3:::fileappbucket/*"
+          Action:
+          - "s3:ListBucket"
+          - "s3:GetObject"
+          - "s3:PutObject"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00AWSEC2RoleAccess00emd1t"
+      Users: []
+  EC2SubnetRouteTableAssociation00rtbassoc0e71f7ff6f5d56c5f00jNFUI:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Delete"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb07a14a0cee92c76d700xWJmk"
+      SubnetId:
+        Ref: "EC2Subnet00subnet004c63a5f3a2e141a00cUFW0"
+  LogsLogStream0020240512LATEST96ee108e6f694b06bc8a322b626ad7b700GjMaw:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]96ee108e6f694b06bc8a322b626ad7b7"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATESTe259a3c63bed4b5b8986d3f875f30eeb00wwJxP:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]e259a3c63bed4b5b8986d3f875f30eeb"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATESTb7258426d7dc4c6091c65a2b5fe166a700yETsh:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]b7258426d7dc4c6091c65a2b5fe166a7"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudWatchAlarm00TargetTrackingtablefileuploadProvisionedCapacityHighaf37bd76cd764750a9178293c3def17d00QG6hT:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba"
+      MetricName: "ProvisionedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba."
+      AlarmName: "TargetTracking-table/file-upload-ProvisionedCapacityHigh-af37bd76-cd76-4750-a917-8293c3def17d"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  LogsLogStream0020240513LATESTeda3a3dec1a748759fda2a591076988400SiFHe:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]eda3a3dec1a748759fda2a5910769884"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST5c0463d8257a42229ba28d1e92aebda900Lcv3a:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]5c0463d8257a42229ba28d1e92aebda9"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  ApplicationAutoScalingScalableTarget00tableMyFile00xrjyn:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApplicationAutoScaling::ScalableTarget"
+    DeletionPolicy: "Delete"
+    Properties:
+      ScalableDimension: "dynamodb:table:WriteCapacityUnits"
+      SuspendedState:
+        DynamicScalingOutSuspended: false
+        ScheduledScalingSuspended: false
+        DynamicScalingInSuspended: false
+      MinCapacity: 1
+      ResourceId: "table/MyFile"
+      ServiceNamespace: "dynamodb"
+      MaxCapacity: 10
+  EC2RouteTable00rtb07a14a0cee92c76d700xWJmk:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Delete"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      Tags:
+      - Value: "app-routetable"
+        Key: "Name"
+  LogsLogGroup00awslambdaappcreatevm00B2KYN:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogGroupClass: "STANDARD"
+      LogGroupName: "/aws/lambda/app-create-vm"
+      DataProtectionPolicy: {}
+  EC2Route00rtb07a14a0cee92c76d700w8lz5:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Delete"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb07a14a0cee92c76d700xWJmk"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc01d85ce25a046129700STYNy"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  LogsLogStream0020240512LATESTe62eaaca3f0b417a96adf93a23b4d8a700ZWJKe:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]e62eaaca3f0b417a96adf93a23b4d8a7"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  EC2Route00rtb07a14a0cee92c76d700WbMj5:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Delete"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb07a14a0cee92c76d700xWJmk"
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId:
+        Ref: "EC2InternetGateway00igw0a84e21512f8df69400CdLsv"
+      VpcEndpointId: "igw-0a84e21512f8df694"
+  CloudFrontOriginRequestPolicy00acba4595bd2849b8b9fe13317c0390fa00wAx2m:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy to forward user-agent and referer headers to origin"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "referer"
+          - "user-agent"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-UserAgentRefererHeaders"
+  CloudWatchAlarm00TargetTrackingtablefileuploadAlarmLow38ae47457ab6449ba1e7eee4d86d5bbe00c3NY0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 15
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba"
+      MetricName: "ConsumedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba."
+      AlarmName: "TargetTracking-table/file-upload-AlarmLow-38ae4745-7ab6-449b-a1e7-eee4d86d5bbe"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 30
+  LogsLogStream0020240512LATESTb400fe85865246349068789ac2676fa400umu87:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]b400fe85865246349068789ac2676fa4"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST1ce9e7b0819c4a6fb00efa9fe5a17e6100T41LQ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]1ce9e7b0819c4a6fb00efa9fe5a17e61"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  IAMManagedPolicy00policyEC2InstanceAccess00uoSq2:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "EC2InstanceAccess"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "*"
+          Action:
+          - "ec2:RunInstances"
+          - "ec2:CreateVolume"
+          - "ec2:DescribeInstances"
+          - "ec2:DescribeInstanceAttribute"
+          - "ec2:DescribeInstanceStatus"
+          - "ec2:DescribeInstances"
+          - "ec2:DescribeKeyPairs"
+          - "ec2:DescribeSecurityGroups"
+          - "ec2:DescribeSubnets"
+          - "ec2:DescribeImages"
+          - "ec2:CreateTags"
+          - "ec2:CreateSecurityGroup"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00appcreatevmroleievla32700ZYhcs"
+      Users: []
+  LogsLogStream0020240512LATESTd4da77d1077940d6bbd2b5d5a8e916d500ufBo5:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]d4da77d1077940d6bbd2b5d5a8e916d5"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  EC2Route00rtb0256ca3de49f4fb1a00rODxa:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Delete"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0256ca3de49f4fb1a00yIpUj"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc01d85ce25a046129700STYNy"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  LogsLogStream0020240513LATEST9f2125b5ca834b6688b671fc3fbef1e000pXf6Z:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]9f2125b5ca834b6688b671fc3fbef1e0"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LambdaFunction00appcreatevm00TW0kJ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::Function"
+    DeletionPolicy: "Delete"
+    Properties:
+      MemorySize: 128
+      Description: ""
+      TracingConfig:
+        Mode: "PassThrough"
+      Timeout: 30
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: "Auto"
+      Handler: "index.handler"
+      Code:
+        S3Bucket:
+          Ref: "LambdaFunction00appcreatevm00TW0kJCodeS3BucketOneOf8DMQW"
+        S3Key:
+          Ref: "LambdaFunction00appcreatevm00TW0kJCodeS3KeyOneOfAHUvY"
+      Role:
+        Fn::GetAtt:
+        - "IAMRole00appcreatevmroleievla32700ZYhcs"
+        - "Arn"
+      FileSystemConfigs: []
+      FunctionName: "app-create-vm"
+      Runtime: "nodejs20.x"
+      PackageType: "Zip"
+      LoggingConfig:
+        LogFormat: "Text"
+        LogGroup: "/aws/lambda/app-create-vm"
+      EphemeralStorage:
+        Size: 512
+      Architectures:
+      - "x86_64"
+  CloudFrontCachePolicy004135ea2d6df844a39df34b5a84be39ad00ogA2M:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy with caching disabled"
+        MinTTL: 0
+        MaxTTL: 0
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: false
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: false
+        DefaultTTL: 0
+        Name: "Managed-CachingDisabled"
+  LogsLogStream0020240512LATEST56ca5891b9804d3fbc85e472f89f926000WImbw:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]56ca5891b9804d3fbc85e472f89f9260"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240513LATEST8d499965db2944ddb54784726d6d24e900z2njJ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]8d499965db2944ddb54784726d6d24e9"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATESTec32976559c141e0be89836d4b8b41e800Gx3yR:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ec32976559c141e0be89836d4b8b41e8"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudWatchAlarm00TargetTrackingtablefileuploadAlarmHigh3fc0a4e3365b4805a2fe628b038ffc56004fAT8:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 2
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317"
+      MetricName: "ConsumedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317."
+      AlarmName: "TargetTracking-table/file-upload-AlarmHigh-3fc0a4e3-365b-4805-a2fe-628b038ffc56"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 42
+  LogsLogStream0020240513LATEST09ed0f9582ed43209d487f94e629da8b00uJbpR:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]09ed0f9582ed43209d487f94e629da8b"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  CloudFrontCachePolicy000862726205a94f769dedb50ca2e3a84f00jKpem:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy for Elemental MediaPackage Origin"
+        MinTTL: 0
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStrings:
+            - "aws.manifestfilter"
+            - "start"
+            - "end"
+            - "m"
+            QueryStringBehavior: "whitelist"
+          EnableAcceptEncodingBrotli: false
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "origin"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 86400
+        Name: "Managed-Elemental-MediaPackage"
+  LogsLogStream0020240513LATEST8488535b45c5484e9aa0284c5c15a06400TryhS:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]8488535b45c5484e9aa0284c5c15a064"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST5a621b61eddf40a1b566bcec8ba482c100We4JA:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]5a621b61eddf40a1b566bcec8ba482c1"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudFrontOriginRequestPolicy00216adef65c7f47e4b9895492eafa07d3006iTwK:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy to forward all parameters in viewer requests"
+        HeadersConfig:
+          HeaderBehavior: "allViewer"
+        CookiesConfig:
+          CookieBehavior: "all"
+        Name: "Managed-AllViewer"
+  IAMManagedPolicy00policyAWSDynamoDBAccess0005rT1:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSDynamoDBAccess"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:dynamodb:us-east-2:730335631898:table/file-upload"
+          Action: "dynamodb:PutItem"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00fileUploadrolejqlf7p1o00ezfLw"
+      Users: []
+  LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogGroupClass: "STANDARD"
+      LogGroupName: "/aws/lambda/generatePreSignedUrl"
+      DataProtectionPolicy: {}
+  LogsLogStream0020240512LATEST271d956a39d5417699c0c4a1b821afad00bBfau:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]271d956a39d5417699c0c4a1b821afad"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  MemoryDBACL00openaccess00Ipj9Y:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::MemoryDB::ACL"
+    DeletionPolicy: "Delete"
+    Properties:
+      ACLName: "open-access"
+      Tags: []
+      UserNames:
+      - "default"
+  CloudFrontCachePolicy00b2884449e4de46a7ac3670bc7f1ddd6d00GBAf7:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Default policy when compression is disabled"
+        MinTTL: 1
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: false
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: false
+        DefaultTTL: 86400
+        Name: "Managed-CachingOptimizedForUncompressedObjects"
+  LogsLogStream0020240513LATESTa99b3eeeda1947bfa4bd503f0ca211cc001g1NQ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]a99b3eeeda1947bfa4bd503f0ca211cc"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  CloudFrontOriginRequestPolicy0088a5eaf42fd44709b370b4c650ea3fcf00yWhg3:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy for S3 origin with CORS"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+          - "access-control-request-headers"
+          - "access-control-request-method"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-CORS-S3Origin"
+  LogsLogStream0020240513LATEST6842adde189f4ae2b0b6707e99149921001zLvS:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]6842adde189f4ae2b0b6707e99149921"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  AmplifyApp00appsd2ez4eds2hhpye00UPfL0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Amplify::App"
+    DeletionPolicy: "Delete"
+    Properties:
+      CustomRules:
+      - Status: "404-200"
+        Target: "/index.html"
+        Source: "/<*>"
+      EnableBranchAutoDeletion: false
+      Platform: "WEB"
+      CustomHeaders: ""
+      Name: "fileuploadapp"
+  EC2NetworkInterfaceAttachment00elaattach0231bcc708180f7fc00I9ghd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::NetworkInterfaceAttachment"
+    DeletionPolicy: "Delete"
+    Properties:
+      NetworkInterfaceId: "eni-0a829a32716b28288"
+      DeviceIndex: "1"
+      DeleteOnTermination: false
+  CloudFrontOriginRequestPolicy00b689b0a853d040abbaf268738e2966ac00oZXn9:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy to forward all parameters in viewer requests except for the\
+          \ Host header"
+        HeadersConfig:
+          HeaderBehavior: "allExcept"
+          Headers:
+          - "host"
+        CookiesConfig:
+          CookieBehavior: "all"
+        Name: "Managed-AllViewerExceptHostHeader"
+  CloudWatchAlarm00TargetTrackingtableMyFileProvisionedCapacityHigh2ca436b174eb4eb4ae7997676153c95e00RdSss:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07"
+      MetricName: "ProvisionedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07."
+      AlarmName: "TargetTracking-table/MyFile-ProvisionedCapacityHigh-2ca436b1-74eb-4eb4-ae79-97676153c95e"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  LogsLogStream0020240513LATEST43792f3692f04a0e86e9e775b733d06500auAXL:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]43792f3692f04a0e86e9e775b733d065"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240513LATESTf605afa11a1b444c89ed608d1f3b1d9900OzRzD:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]f605afa11a1b444c89ed608d1f3b1d99"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240511LATEST543bcd61639c4b29a4560e62c50e2e7200o4Eq6:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/11/[$LATEST]543bcd61639c4b29a4560e62c50e2e72"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  IAMRole00APIGatewayCognitoAuthorizerRole00pIWi8:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::730335631898:policy/service-role/Cognito-1715436997696"
+      MaxSessionDuration: 3600
+      RoleName: "APIGatewayCognitoAuthorizerRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              sts:ExternalId: "73b9d940-0436-4c78-907a-5fc311dad661"
+          Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "cognito-idp.amazonaws.com"
+          Sid: ""
+  LogsLogStream0020240511LATEST054a1baff7c54bd0a87eaacace8bc9bb00E9OEt:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/11/[$LATEST]054a1baff7c54bd0a87eaacace8bc9bb"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240513LATEST7090e0fa61e74087a17220d7d52ba26000dvZG0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]7090e0fa61e74087a17220d7d52ba260"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogGroup00awslambdafileUpload00teZrY:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogGroupClass: "STANDARD"
+      LogGroupName: "/aws/lambda/fileUpload"
+      DataProtectionPolicy: {}
+  LogsLogStream0020240513LATEST9818397e97d44bcabf483cff8f3e585800hytwl:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]9818397e97d44bcabf483cff8f3e5858"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATESTa284d814b1cb446da980b9e0c8ceabef00shAJE:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]a284d814b1cb446da980b9e0c8ceabef"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  ApiGatewayRestApi00hipdom6t3b003eqtt:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::RestApi"
+    DeletionPolicy: "Delete"
+    Properties:
+      ApiKeySourceType: "HEADER"
+      Description: "Created by AWS Lambda"
+      EndpointConfiguration:
+        Types:
+        - "REGIONAL"
+      DisableExecuteApiEndpoint: false
+      Name: "generatePreSignedUrl-API"
+  LogsLogStream0020240511LATEST5308b9bc9e0f44c2b64f4eb1883a180900NqG0S:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/11/[$LATEST]5308b9bc9e0f44c2b64f4eb1883a1809"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST89cccd4262234448bdda1b6f8bf9797800uLscj:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]89cccd4262234448bdda1b6f8bf97978"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  IAMRole00AWSServiceRoleForTrustedAdvisor000O13A:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/aws-service-role/trustedadvisor.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSTrustedAdvisorServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForTrustedAdvisor"
+      Description: "Access for the AWS Trusted Advisor Service to help reduce cost,\
+        \ increase performance, and improve security of your AWS environment."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "trustedadvisor.amazonaws.com"
+  IAMRole00generatePreSignedUrlroledcil00rj00J1lMh:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::730335631898:policy/service-role/AWSLambdaBasicExecutionRole-ac2d2556-adbd-493e-b541-6b21765db269"
+      - "arn:aws:iam::730335631898:policy/S3BucketAccessPolicy"
+      MaxSessionDuration: 3600
+      RoleName: "generatePreSignedUrl-role-dcil00rj"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "lambda.amazonaws.com"
+  IAMManagedPolicy00policyserviceroleAWSLambdaBasicExecutionRoleb6f8873742694f46baa02969ed1663a000AbsEd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSLambdaBasicExecutionRole-b6f88737-4269-4f46-baa0-2969ed1663a0"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:logs:us-east-2:730335631898:*"
+          Action: "logs:CreateLogGroup"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:logs:us-east-2:730335631898:log-group:/aws/lambda/app-create-vm:*"
+          Action:
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00appcreatevmroleievla32700ZYhcs"
+      Users: []
+  ElastiCacheUser00default00CWBhF:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ElastiCache::User"
+    DeletionPolicy: "Delete"
+    Properties:
+      UserName: "default"
+      UserId: "default"
+      Engine: "redis"
+      Tags: []
+  CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600h5HXd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy with caching enabled. Supports Gzip and Brotli compression."
+        MinTTL: 1
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 86400
+        Name: "Managed-CachingOptimized"
+  MemoryDBParameterGroup00defaultmemorydbredis700RyMAr:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis7"
+      Family: "memorydb_redis7"
+      Description: "Default parameter group for memorydb_redis7"
+  ApplicationAutoScalingScalableTarget00tablefileupload00CQeCA:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApplicationAutoScaling::ScalableTarget"
+    DeletionPolicy: "Delete"
+    Properties:
+      ScalableDimension: "dynamodb:table:WriteCapacityUnits"
+      SuspendedState:
+        DynamicScalingOutSuspended: false
+        ScheduledScalingSuspended: false
+        DynamicScalingInSuspended: false
+      MinCapacity: 1
+      ResourceId: "table/file-upload"
+      ServiceNamespace: "dynamodb"
+      MaxCapacity: 10
+  LogsLogStream0020240513LATEST272fab2016294eb39b6cfb18ed558b7e00iKA9o:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]272fab2016294eb39b6cfb18ed558b7e"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST85a388f08bcd40a1b02092b00f256f35007WR1p:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]85a388f08bcd40a1b02092b00f256f35"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  EC2SubnetNetworkAclAssociation00aclassoc09102fa60b953d5a9009XlOf:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Delete"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl07f3ed380f2933a0b003wfAC"
+      SubnetId:
+        Ref: "EC2Subnet00subnet004c63a5f3a2e141a00cUFW0"
+  LogsLogStream0020240513LATEST30ad975109e6468ebc9bc51717ed535000oXOq8:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]30ad975109e6468ebc9bc51717ed5350"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  MemoryDBUser00default000puLI:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::MemoryDB::User"
+    DeletionPolicy: "Delete"
+    Properties:
+      Tags: []
+      UserName: "default"
+  LogsLogStream0020240513LATEST02301e3852144e5d8d2e6105be37edc5006vSXt:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]02301e3852144e5d8d2e6105be37edc5"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  CloudWatchAlarm00TargetTrackingtableMyFileProvisionedCapacityLow5252af433079406f815bf7ddeb9a75b000uy0TH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876"
+      MetricName: "ProvisionedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876."
+      AlarmName: "TargetTracking-table/MyFile-ProvisionedCapacityLow-5252af43-3079-406f-815b-f7ddeb9a75b0"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  EC2NetworkAcl00acl07f3ed380f2933a0b003wfAC:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::NetworkAcl"
+    DeletionPolicy: "Delete"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      Tags: []
+  AmplifyBranch00appsd2ez4eds2hhpyebranchesprod00WS10j:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Amplify::Branch"
+    DeletionPolicy: "Delete"
+    Properties:
+      Backend: {}
+      AppId:
+        Fn::GetAtt:
+        - "AmplifyApp00appsd2ez4eds2hhpye00UPfL0"
+        - "AppId"
+      EnablePullRequestPreview: false
+      EnableAutoBuild: true
+      EnablePerformanceMode: false
+      Stage: "PRODUCTION"
+      BranchName: "prod"
+  LogsLogStream0020240512LATEST6e11be6943fb46f380842f2a6d5e568700OWZhi:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]6e11be6943fb46f380842f2a6d5e5687"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  IAMRole00AWSServiceRoleForSupport00PyPLo:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/aws-service-role/support.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSSupportServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForSupport"
+      Description: "Enables resource access for AWS to provide billing, administrative\
+        \ and support services"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "support.amazonaws.com"
+  EC2SecurityGroup00sg0a3f36e9bbf45935800StNIC:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      GroupDescription: "default VPC security group"
+      GroupName: "default"
+      VpcId:
+        Ref: "EC2VPC00vpc01d85ce25a046129700STYNy"
+      SecurityGroupIngress:
+      - IpProtocol: "-1"
+        FromPort: -1
+        SourceSecurityGroupId:
+          Fn::GetAtt:
+          - "EC2VPC00vpc01d85ce25a046129700STYNy"
+          - "DefaultSecurityGroup"
+        ToPort: -1
+        SourceSecurityGroupOwnerId: "730335631898"
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  LogsLogStream0020240513LATESTa026d6083da349f3a44128aca27ce6f800yUqB6:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]a026d6083da349f3a44128aca27ce6f8"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST96eb2033e6084d609d3cffa82f117db000U9OKQ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]96eb2033e6084d609d3cffa82f117db0"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  ApiGatewayDeployment00be7ezv008Vu6Y:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Deployment"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi00hipdom6t3b003eqtt"
+  LogsLogStream0020240513LATESTcdacd1bc957e48d09e7633e997b37d96000YggX:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]cdacd1bc957e48d09e7633e997b37d96"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST5d80354fd457445496abfe203c8c11fd00Mo5ub:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]5d80354fd457445496abfe203c8c11fd"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATESTfc1b6178284a42ff8b9f8d62550cf37300mQBwQ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]fc1b6178284a42ff8b9f8d62550cf373"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST9e82f03bcd2f4297897cebe3660d745a00gK7po:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]9e82f03bcd2f4297897cebe3660d745a"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATESTccba4ad6a9624d229066825547964c8f007rnaV:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ccba4ad6a9624d229066825547964c8f"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240513LATEST7667a2c5284f43f2b2a4f20a1a6884d900pyZhf:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]7667a2c5284f43f2b2a4f20a1a6884d9"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST89ec70fec22b4927ae2013e1e6b6260000IzfgX:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]89ec70fec22b4927ae2013e1e6b62600"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATESTd6ee2c25f55d4cb786639131693e7dfc00ISTOd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]d6ee2c25f55d4cb786639131693e7dfc"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  CloudWatchAlarm00TargetTrackingtablefileuploadAlarmHigh1063843cfda44aeb8094bc983a860d3500e8YFw:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 2
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba"
+      MetricName: "ConsumedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba."
+      AlarmName: "TargetTracking-table/file-upload-AlarmHigh-1063843c-fda4-4aeb-8094-bc983a860d35"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 42
+  ApplicationAutoScalingScalableTarget00tablefileupload00tnCwp:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApplicationAutoScaling::ScalableTarget"
+    DeletionPolicy: "Delete"
+    Properties:
+      ScalableDimension: "dynamodb:table:ReadCapacityUnits"
+      SuspendedState:
+        DynamicScalingOutSuspended: false
+        ScheduledScalingSuspended: false
+        DynamicScalingInSuspended: false
+      MinCapacity: 1
+      ResourceId: "table/file-upload"
+      ServiceNamespace: "dynamodb"
+      MaxCapacity: 10
+  IAMRole00AWSServiceRoleForEc2InstanceConnect00SxCbd:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/aws-service-role/ec2-instance-connect.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/Ec2InstanceConnectEndpoint"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForEc2InstanceConnect"
+      Description: "The Service Linked Role used by EC2 Instance Connect Endpoint."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2-instance-connect.amazonaws.com"
+  LogsLogStream0020240513LATESTdea19a4360544b4782b6c9c42c6858ff00fomA2:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]dea19a4360544b4782b6c9c42c6858ff"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST1147c46723f84a0a9dd0664f51f94dc000wy3pS:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]1147c46723f84a0a9dd0664f51f94dc0"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  IAMRole00appcreatevmroleievla32700ZYhcs:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::730335631898:policy/DynamoDBStreamAccessPolicy"
+      - "arn:aws:iam::730335631898:policy/EC2InstanceAccess"
+      - "arn:aws:iam::730335631898:policy/EC2InstanceProfilePassRole"
+      - "arn:aws:iam::730335631898:policy/service-role/AWSLambdaBasicExecutionRole-b6f88737-4269-4f46-baa0-2969ed1663a0"
+      MaxSessionDuration: 3600
+      RoleName: "app-create-vm-role-ievla327"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "lambda.amazonaws.com"
+  AthenaWorkGroup00primary00Gzgyk:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Athena::WorkGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      WorkGroupConfiguration:
+        RequesterPaysEnabled: false
+        EnforceWorkGroupConfiguration: false
+        EngineVersion:
+          SelectedEngineVersion: "AUTO"
+        PublishCloudWatchMetricsEnabled: false
+        ResultConfiguration: {}
+      State: "ENABLED"
+      Tags: []
+      Name: "primary"
+  LogsLogStream0020240512LATESTba3e4ae96d6b453988a998f33306260f00JYRNH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ba3e4ae96d6b453988a998f33306260f"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  ApplicationAutoScalingScalableTarget00tableMyFile00cyJ6M:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApplicationAutoScaling::ScalableTarget"
+    DeletionPolicy: "Delete"
+    Properties:
+      ScalableDimension: "dynamodb:table:ReadCapacityUnits"
+      SuspendedState:
+        DynamicScalingOutSuspended: false
+        ScheduledScalingSuspended: false
+        DynamicScalingInSuspended: false
+      MinCapacity: 1
+      ResourceId: "table/MyFile"
+      ServiceNamespace: "dynamodb"
+      MaxCapacity: 10
+  CloudWatchAlarm00TargetTrackingtableMyFileProvisionedCapacityHigh88d537c3020047e78dd161f9b352da0a00aFtul:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876"
+      MetricName: "ProvisionedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876."
+      AlarmName: "TargetTracking-table/MyFile-ProvisionedCapacityHigh-88d537c3-0200-47e7-8dd1-61f9b352da0a"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  LogsLogStream0020240513LATEST4c3f39c4a5f64925b1c6d10c4660c14000NbmQD:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]4c3f39c4a5f64925b1c6d10c4660c140"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240513LATEST75d4e3e74307406abc1aa52b24c2ac7500fq2hM:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]75d4e3e74307406abc1aa52b24c2ac75"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240513LATEST0ae1189695f8409a8a52c41eb266f79f0096FC5:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]0ae1189695f8409a8a52c41eb266f79f"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATESTff180c28c5184abea7f94f301a345b9900iyNEj:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ff180c28c5184abea7f94f301a345b99"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  MemoryDBParameterGroup00defaultmemorydbredis600VANgH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Delete"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis6"
+      Family: "memorydb_redis6"
+      Description: "Default parameter group for memorydb_redis6"
+  IAMManagedPolicy00policyserviceroleCognito171543699769600GGoZ1:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "Cognito-1715436997696"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "*"
+          Action:
+          - "sns:publish"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00APIGatewayCognitoAuthorizerRole00pIWi8"
+      Users: []
+  LogsLogStream0020240512LATESTebd7b14789f94c648ab8dc865f9b1e2a00TenSH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ebd7b14789f94c648ab8dc865f9b1e2a"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  LogsLogStream0020240512LATEST8e2dd0dfa52847ca964875827d9b100100B1Dms:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]8e2dd0dfa52847ca964875827d9b1001"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  XRayGroup00groupDefault00ShLP9:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::XRay::Group"
+    DeletionPolicy: "Delete"
+    Properties:
+      GroupName: "Default"
+      InsightsConfiguration:
+        InsightsEnabled: false
+        NotificationsEnabled: false
+      Tags: []
+  CloudWatchAlarm00TargetTrackingtableMyFileAlarmHigh717b018c49174ec4a267592d7627b5e300o6PSB:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 2
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07"
+      MetricName: "ConsumedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07."
+      AlarmName: "TargetTracking-table/MyFile-AlarmHigh-717b018c-4917-4ec4-a267-592d7627b5e3"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 42
+  LogsLogStream0020240513LATEST6c2c7175e63044a69ee07adff063d90b00iiHYQ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]6c2c7175e63044a69ee07adff063d90b"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST2c9794fd6f054d94bd13d93ee066d98900TxGE2:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]2c9794fd6f054d94bd13d93ee066d989"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATESTb78872dfd05e4df9828bb3323b1f1d8300OACA5:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]b78872dfd05e4df9828bb3323b1f1d83"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  IAMRole00AWSEC2RoleAccess00emd1t:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::730335631898:policy/AWSEC2DynamoDBAccess"
+      - "arn:aws:iam::730335631898:policy/AWSEC2S3Access"
+      MaxSessionDuration: 3600
+      RoleName: "AWSEC2RoleAccess"
+      Description: "Allows EC2 instances to call AWS services on your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+  IAMManagedPolicy00policyS3BucketAccessPolicy00wMArH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "S3BucketAccessPolicy"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:s3:::fileappbucket/*"
+          Action:
+          - "s3:GetObject"
+          - "s3:PutObject"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00generatePreSignedUrlroledcil00rj00J1lMh"
+      Users: []
+  IAMManagedPolicy00policyDynamoDBStreamAccessPolicy005ZmMK:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "DynamoDBStreamAccessPolicy"
+      Path: "/"
+      Description: "Allows Lambda to access DynamoDB streams"
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:dynamodb:us-east-2:730335631898:table/file-upload/stream/2024-05-12T19:06:40.825"
+          Action:
+          - "dynamodb:GetRecords"
+          - "dynamodb:GetShardIterator"
+          - "dynamodb:DescribeStream"
+          - "dynamodb:ListStreams"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00appcreatevmroleievla32700ZYhcs"
+      Users: []
+  IAMRole00fileUploadrolejqlf7p1o00ezfLw:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::730335631898:policy/AWSDynamoDBAccess"
+      - "arn:aws:iam::730335631898:policy/service-role/AWSLambdaBasicExecutionRole-c329be63-8278-45d8-a9bb-9f7d9554f645"
+      MaxSessionDuration: 3600
+      RoleName: "fileUpload-role-jqlf7p1o"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "lambda.amazonaws.com"
+  LogsLogStream0020240512LATESTce489aa8145643458433119ff4d983cb00WD30H:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]ce489aa8145643458433119ff4d983cb"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240513LATEST4ecb408dc7574cd293190e5c543bcf6100nNps6:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]4ecb408dc7574cd293190e5c543bcf61"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LambdaFunction00fileUpload008FprE:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Lambda::Function"
+    DeletionPolicy: "Delete"
+    Properties:
+      MemorySize: 128
+      Description: ""
+      TracingConfig:
+        Mode: "PassThrough"
+      Timeout: 30
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: "Auto"
+      Handler: "index.handler"
+      Code:
+        S3Bucket:
+          Ref: "LambdaFunction00fileUpload008FprECodeS3BucketOneOfi6zSR"
+        S3Key:
+          Ref: "LambdaFunction00fileUpload008FprECodeS3KeyOneOfGbWL4"
+      Role:
+        Fn::GetAtt:
+        - "IAMRole00fileUploadrolejqlf7p1o00ezfLw"
+        - "Arn"
+      FileSystemConfigs: []
+      FunctionName: "fileUpload"
+      Runtime: "nodejs20.x"
+      PackageType: "Zip"
+      LoggingConfig:
+        LogFormat: "Text"
+        LogGroup: "/aws/lambda/fileUpload"
+      EphemeralStorage:
+        Size: 512
+      Architectures:
+      - "x86_64"
+  LogsLogStream0020240511LATEST508fba5f00424b128000b67bf485a71100w2VXX:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/11/[$LATEST]508fba5f00424b128000b67bf485a711"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  IAMManagedPolicy00policyAWSEC2DynamoDBAccess00GnpSE:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSEC2DynamoDBAccess"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:dynamodb:us-east-2:730335631898:table/MyFile"
+          Action: "dynamodb:UpdateItem"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00AWSEC2RoleAccess00emd1t"
+      Users: []
+  LogsLogStream0020240513LATEST6d8b1023e1e24838a478313a5f83fa8300feuO1:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]6d8b1023e1e24838a478313a5f83fa83"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  CloudWatchAlarm00TargetTrackingtableMyFileAlarmLowe659010eff0b46348fccf2ae0a16a61500szTy6:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 15
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07"
+      MetricName: "ConsumedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:02e547db-11c7-4d5c-a090-45f3629e2d6c:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/00f87c05-760f-4b0c-a9a1-14e8db93aa07."
+      AlarmName: "TargetTracking-table/MyFile-AlarmLow-e659010e-ff0b-4634-8fcc-f2ae0a16a615"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 30
+  LogsLogStream0020240512LATESTa27aa5c674b644c995dcdf2265846dd100imzpo:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]a27aa5c674b644c995dcdf2265846dd1"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  IAMManagedPolicy00policyEC2VolumeAccess00xEzSZ:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "EC2VolumeAccess"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:ec2:us-east-2::volume/*"
+          Action:
+          - "ec2:CreateVolume"
+          Effect: "Allow"
+      Roles: []
+      Users: []
+  LogsLogStream0020240513LATEST8187871df98b4cd88e95763554792d7500oJ4lh:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]8187871df98b4cd88e95763554792d75"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240513LATESTab0c0bb277fc41f6a9758af68feacd5500AIRVS:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]ab0c0bb277fc41f6a9758af68feacd55"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  IAMManagedPolicy00policyEC2RunInstance00qYXWt:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "EC2RunInstance"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:ec2:us-east-2:730335631898:instance/*"
+          - "arn:aws:ec2:us-east-2:730335631898:network-interface/*"
+          - "arn:aws:ec2:us-east-2:730335631898:security-group/sg-047c6e708d8c2cd55"
+          - "arn:aws:ec2:us-east-2:730335631898:subnet/subnet-004c63a5f3a2e141a"
+          Action:
+          - "ec2:RunInstances"
+          Effect: "Allow"
+      Roles: []
+      Users: []
+  LogsLogStream0020240512LATEST5b44855eb6114e0e8f424ea7af107f4a00MCRAc:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]5b44855eb6114e0e8f424ea7af107f4a"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST41a9c0c72876496e85f772017001683d00sNLCT:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]41a9c0c72876496e85f772017001683d"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  CloudFrontCachePolicy002e54312d136d493c8eb9b001f22f67d200bnerL:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy for Amplify Origin"
+        MinTTL: 2
+        MaxTTL: 600
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "all"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "Authorization"
+            - "CloudFront-Viewer-Country"
+            - "Host"
+          CookiesConfig:
+            CookieBehavior: "all"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 2
+        Name: "Managed-Amplify"
+  LogsLogStream0020240512LATEST533f55bcc2ec4202aac4b03e08e8af0100sLzT0:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]533f55bcc2ec4202aac4b03e08e8af01"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATESTc780a8cd47704dfa960a4598001440d600Aja4z:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]c780a8cd47704dfa960a4598001440d6"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST421dffef6d3c4392a90de5422ef18e0600FPdNy:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]421dffef6d3c4392a90de5422ef18e06"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  CloudFrontOriginRequestPolicy00775133bc15f249f9abeaafb2e0bf67d200GHSEn:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy for Elemental MediaTailor Origin"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+          - "access-control-request-headers"
+          - "x-forwarded-for"
+          - "access-control-request-method"
+          - "user-agent"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-Elemental-MediaTailor-PersonalizedManifests"
+  IAMManagedPolicy00policyEC2InstanceProfilePassRole00nnA1H:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "EC2InstanceProfilePassRole"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:iam::730335631898:role/AWSEC2RoleAccess"
+          Action: "iam:PassRole"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00appcreatevmroleievla32700ZYhcs"
+      Users: []
+  LogsLogStream0020240513LATEST1a5acd4ab8aa42aea37ee98ed7c973ff001MY83:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/13/[$LATEST]1a5acd4ab8aa42aea37ee98ed7c973ff"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  CloudWatchAlarm00TargetTrackingtableMyFileAlarmHigh7322a74d8e264561bc93671c1c05983c00WiZZt:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00MyFile00jlovs"
+        Name: "TableName"
+      Period: 60
+      EvaluationPeriods: 2
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876"
+      MetricName: "ConsumedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:aa3eae02-ab81-4f67-be50-c0badf1885bb:resource/dynamodb/table/MyFile:policyName/$MyFile-scaling-policy:createdBy/53c0312f-1515-48e8-af1f-ac875077a876."
+      AlarmName: "TargetTracking-table/MyFile-AlarmHigh-7322a74d-8e26-4561-bc93-671c1c05983c"
+      Statistic: "Sum"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 42
+  CloudWatchAlarm00TargetTrackingtablefileuploadProvisionedCapacityHighb31545b5174e4dc78e146ccc9ba069ef00Pewo8:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317"
+      MetricName: "ProvisionedReadCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:b5179bd2-f23e-40ff-aa78-db74a13796b7:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/4312228e-0eb0-41fb-acce-2041485f0317."
+      AlarmName: "TargetTracking-table/file-upload-ProvisionedCapacityHigh-b31545b5-174e-4dc7-8e14-6ccc9ba069ef"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  CloudFrontOriginRequestPolicy0033f36d7ef39646d990e052428a34d9dc00lZfKR:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy to forward all parameters in viewer requests and all CloudFront\
+          \ headers as of June 2022"
+        HeadersConfig:
+          HeaderBehavior: "allViewerAndWhitelistCloudFront"
+          Headers:
+          - "CloudFront-Viewer-Time-Zone"
+          - "CloudFront-Viewer-Address"
+          - "CloudFront-Viewer-Country"
+          - "CloudFront-Is-IOS-Viewer"
+          - "CloudFront-Is-Tablet-Viewer"
+          - "CloudFront-Forwarded-Proto"
+          - "CloudFront-Viewer-Country-Name"
+          - "CloudFront-Is-Mobile-Viewer"
+          - "CloudFront-Is-SmartTV-Viewer"
+          - "CloudFront-Viewer-Country-Region"
+          - "CloudFront-Is-Android-Viewer"
+          - "CloudFront-Viewer-Country-Region-Name"
+          - "CloudFront-Viewer-City"
+          - "CloudFront-Viewer-Latitude"
+          - "CloudFront-Viewer-Longitude"
+          - "CloudFront-Viewer-Http-Version"
+          - "CloudFront-Viewer-Postal-Code"
+          - "CloudFront-Viewer-ASN"
+          - "CloudFront-Is-Desktop-Viewer"
+          - "CloudFront-Viewer-Metro-Code"
+          - "CloudFront-Viewer-TLS"
+        CookiesConfig:
+          CookieBehavior: "all"
+        Name: "Managed-AllViewerAndCloudFrontHeaders-2022-06"
+  LogsLogStream0020240512LATEST1527606eacfb47628bb7dce5a354c7c300xQHrH:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]1527606eacfb47628bb7dce5a354c7c3"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  CloudWatchAlarm00TargetTrackingtablefileuploadProvisionedCapacityLow2d5a69aab1e24fc69ec0d416d9a2d2d7003fq6X:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Delete"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value:
+          Ref: "DynamoDBTable00fileupload00G6Fu3"
+        Name: "TableName"
+      Period: 300
+      EvaluationPeriods: 3
+      Namespace: "AWS/DynamoDB"
+      OKActions: []
+      AlarmActions:
+      - "arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba"
+      MetricName: "ProvisionedWriteCapacityUnits"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:730335631898:scalingPolicy:e3031113-8901-4a3d-9564-1f407993cab1:resource/dynamodb/table/file-upload:policyName/$file-upload-scaling-policy:createdBy/3e13b1b8-673e-40e8-8081-3ea9784fa6ba."
+      AlarmName: "TargetTracking-table/file-upload-ProvisionedCapacityLow-2d5a69aa-b1e2-4fc6-9ec0-d416d9a2d2d7"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 1
+  IAMManagedPolicy00policyserviceroleAWSLambdaBasicExecutionRoleac2d2556adbd493eb5416b21765db26900K4bHg:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Delete"
+    Properties:
+      ManagedPolicyName: "AWSLambdaBasicExecutionRole-ac2d2556-adbd-493e-b541-6b21765db269"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:logs:us-east-2:730335631898:*"
+          Action: "logs:CreateLogGroup"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:logs:us-east-2:730335631898:log-group:/aws/lambda/generatePreSignedUrl:*"
+          Action:
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00generatePreSignedUrlroledcil00rj00J1lMh"
+      Users: []
+  LogsLogStream0020240512LATEST3c589988beaf40b28869f2ac13b108a100P7mM4:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]3c589988beaf40b28869f2ac13b108a1"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  ApiGatewayDeployment00lg5y1n00t20hK:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::ApiGateway::Deployment"
+    DeletionPolicy: "Delete"
+    Properties:
+      RestApiId:
+        Ref: "ApiGatewayRestApi00hipdom6t3b003eqtt"
+  LogsLogStream0020240512LATESTdcc6df6211e745eaaebf68aa8600b3dd004oEfh:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]dcc6df6211e745eaaebf68aa8600b3dd"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  LogsLogStream0020240512LATEST56585c8b51ed4d86a102469425981d7300oTOp3:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]56585c8b51ed4d86a102469425981d73"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  IAMInstanceProfile00AWSEC2RoleAccess00VCaUU:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Delete"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00AWSEC2RoleAccess00emd1t"
+      InstanceProfileName:
+        Ref: "IAMRole00AWSEC2RoleAccess00emd1t"
+  LogsLogStream0020240512LATEST595697334e1e4e7b835d0c8a983ea87e0097lDA:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]595697334e1e4e7b835d0c8a983ea87e"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdaappcreatevm00B2KYN"
+  EC2InstanceConnectEndpoint00eice038b8099520c3389b00pEdoY:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::EC2::InstanceConnectEndpoint"
+    DeletionPolicy: "Delete"
+    Properties:
+      PreserveClientIp: false
+      SecurityGroupIds:
+      - "sg-047c6e708d8c2cd55"
+      SubnetId: "subnet-004c63a5f3a2e141a"
+  LogsLogStream0020240512LATESTd66014d5a976413d8c62e6f89edf2d82003xhWy:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]d66014d5a976413d8c62e6f89edf2d82"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdafileUpload00teZrY"
+  LogsLogStream0020240512LATEST82acce9ca1ff4110b6db3aed6154f62500hNGfv:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Delete"
+    Properties:
+      LogStreamName: "2024/05/12/[$LATEST]82acce9ca1ff4110b6db3aed6154f625"
+      LogGroupName:
+        Ref: "LogsLogGroup00awslambdageneratePreSignedUrl00rFxvx"
+  EventsEventBus00default00BTgOl:
+    UpdateReplacePolicy: "Delete"
+    Type: "AWS::Events::EventBus"
+    DeletionPolicy: "Delete"
+    Properties:
+      Tags: []
+      Name: "default"

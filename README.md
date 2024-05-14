@@ -43,7 +43,7 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
   ![Screenshot 2024-05-13 at 7.24.08 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_MZ4WyM%2FScreenshot%202024-05-13%20at%207.24.08%E2%80%AFPM.png)
 
 - After the file is uploaded in S3 and added to DynamoDB, trigger a script run in a VM instance (EC2) via the DynamoDB Event.
-  - Create a new VM automatically 
+  - Create a new VM automatically [4] 
   - Download the script from S3 to the VM (Upload the scripts to S3 via CDK or programmatically as the InputFile)
   - Run the script in the VM
     - Get the inputs from DynamoDB File Table by id
@@ -80,7 +80,7 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
 - ✓ Follow the AWS Best Practices.
   - Followed AWS best practices (IAM roles, policies, **principle of least privilege**, security, networking and others)
 - ✓ After saving the inputs and S3 path in DynamoDB File Table [2], your system will create a new VM based on the event (not a pre-provisioned VM) and trigger the script to run automatically with error handling (no sleep).
-  - _vmscript.sh_ has error handling as well, so no break in the code. sleep is not used, only exit.
+  - _vmscript.sh_ [5] has error handling as well, so no break in the code. sleep is not used, only exit.
 - ✓ Professional code and reader-friendly README file.
   - Followed
 - ✓ **Bonus** Use Flowbite Tailwind CSS and ReactJS for Responsive UI [3]
@@ -91,4 +91,6 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
 [2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html
 [3]: https://tailwindcss.com/docs/guides/create-react-app
 [4]: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/ec2-example-creating-an-instance.html
-[5]: 
+[5]: https://www.bluematador.com/learn/aws-cli-cheatsheet
+
+Note: IacTemplate.yaml is attached from cloudformation to a picture of environment.
