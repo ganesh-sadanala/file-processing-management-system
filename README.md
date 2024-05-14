@@ -92,5 +92,14 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
 [3]: https://tailwindcss.com/docs/guides/create-react-app
 [4]: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/ec2-example-creating-an-instance.html
 [5]: https://www.bluematador.com/learn/aws-cli-cheatsheet
+```
+[1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html
+[2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html
 
+[3]: https://tailwindcss.com/docs/guides/create-react-app
+
+[4]: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/ec2-example-creating-an-instance.html
+
+[5]: https://www.bluematador.com/learn/aws-cli-cheatsheet
+```
 Note: IacTemplate.yaml is attached from cloudformation to a picture of environment.
