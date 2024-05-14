@@ -29,18 +29,18 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
   - File input: [InputFile].txt
   - [InputFile].txt content: "[File Content]"
   - Submit button
-![Screenshot 2024-05-13 at 7.14.43 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_Nmv31x%2FScreenshot%202024-05-13%20at%207.14.43%E2%80%AFPM.png)
+![1.png](1.png)
 
 - Upload the input file to S3 from the browser directly (do not send the file content directly to Lambda, do not get credentials from Cognito)
   - S3 path: [BucketName]/[InputFile].txt
   - Achieved using [PreSignedURL][1]
-![Screenshot 2024-05-13 at 7.21.42 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_waBXYO%2FScreenshot%202024-05-13%20at%207.21.42%E2%80%AFPM.png)
+![2.png](2.png)
 
 - Save the inputs and S3 path in DynamoDB FileTable via API gateway and Lambda Function, 
   - id: {1} // auto-generated id via nanoid
   - input_text: [InputText]
   - input_file_path: [BucketName]/[InputFile].txt
-  ![Screenshot 2024-05-13 at 7.24.08 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_MZ4WyM%2FScreenshot%202024-05-13%20at%207.24.08%E2%80%AFPM.png)
+  ![3.png](3.png)
 
 - After the file is uploaded in S3 and added to DynamoDB, trigger a script run in a VM instance (EC2) via the DynamoDB Event.
   - Create a new VM automatically [4] 
@@ -56,10 +56,10 @@ https://drive.google.com/file/d/1GYXVy4V2JDCqn-2qkbxaNHsaxXakzAHN/view?usp=shari
       -  id : {1}
       -  output_file_path: [BucketName]/[OutputFile].out..txt 
   - Terminate the VM automatically
-![Screenshot 2024-05-13 at 7.28.49 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_gGr4br%2FScreenshot%202024-05-13%20at%207.28.49%E2%80%AFPM.png)
-![Screenshot 2024-05-13 at 7.29.14 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_imDfJl%2FScreenshot%202024-05-13%20at%207.29.14%E2%80%AFPM.png)
-![Screenshot 2024-05-13 at 7.28.28 PM.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fwz%2Fsjq4yf5j25vc1hmr9y97vs6w0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_ATmoMw%2FScreenshot%202024-05-13%20at%207.28.28%E2%80%AFPM.png)
-
+![4.png](4.png)
+![5.png](5.png)
+![6.png](6.png)
+  
 ### AWS Environment video
 - AWS Environment - https://drive.google.com/file/d/1LYgUNL5Fz9qgJRCF2wbaHXdusHn5wWTT/view?usp=sharing
 - AWS IAM - https://drive.google.com/file/d/1ubFH40P57nBSu1KNKYdDwDnhY441a3XM/view?usp=sharing
