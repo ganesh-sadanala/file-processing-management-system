@@ -4,9 +4,11 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
 import { RemovalPolicy, CfnOutput } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import * as path from 'path';
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,8 +20,10 @@ export class CdkAppStack extends cdk.Stack {
     // Create DynamoDB table
     const table = createDynamoDBTable(this);
 
-    // Create Lambda function
-    const lambdaFunction = createLambdaFunction(this, bucket, table);
+    // Create Lambda functions
+    const fileUploadLambda = createFileUploadLambda(this, bucket, table.fileUploadTable);
+    const generatePreSignedUrlLambda = createGeneratePreSignedUrlLambda(this, bucket);
+    const appCreateVmLambda = createAppCreateVmLambda(this, bucket, table.myFileTable);
 
     // Create API Gateway
     const api = createAPIGateway(this, lambdaFunction);
@@ -62,6 +66,75 @@ function createDynamoDBTable(scope: Construct): DynamoDBTables {
   });
 
   return { fileUploadTable, myFileTable };
+}
+
+function createFileUploadLambda(scope: Construct, bucket: s3.Bucket, table: dynamodb.Table): lambda.Function {
+  const lambdaRole=new iam.Role(scope, 'FileUploadLambdaRole', {
+    assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    managedPolicies: [
+      iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3ReadOnlyAccess'),
+    ],
+  })
+
+  const lambdaFunction=new lambda.Function(scope, 'fileUpload', {
+    functionName: 'fileUpload',
+    runtime: lambda.Runtime.NODEJS_LATEST,
+    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/fileUpload')),
+    handler: 'index.handler',
+    role: lambdaRole
+  })
+
+  bucket.grantReadWrite(lambdaFunction);
+  table.grantReadWriteData(lambdaFunction);
+  
+  return lambdaFunction
+}
+
+function createGeneratePreSignedUrlLambda(scope: Construct, bucket: s3.Bucket):lambda.Function {
+
+  const lambdaRole = new iam.Role(scope, 'GeneratePreSignedUrlLambdaRole', {
+    assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    managedPolicies: [
+      iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3ReadOnlyAccess'),
+    ],
+  });
+
+  const lambdaFunction = new lambda.Function(scope, 'generatePreSignedUrl', {
+    functionName: 'generatePreSignedUrl',
+    runtime: lambda.Runtime.NODEJS_LATEST,
+    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/generatePreSignedUrl')),
+    handler: 'index.handler',
+    role: lambdaRole,
+  });
+
+  bucket.grantRead(lambdaFunction);
+  return lambdaFunction
+}
+
+function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: dynamodb.Table): lambda.Function {
+  const lambdaRole = new iam.Role(scope, 'GeneratePreSignedUrlLambdaRole', {
+    assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    managedPolicies: [
+      iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3ReadOnlyAccess'),
+    ],
+  });
+
+  const lambdaFunction = new lambda.Function(scope, 'appCreateVm', {
+    functionName: 'app-create-vm',
+    runtime: lambda.Runtime.NODEJS_LATEST,
+    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/appCreateVm')),
+    handler: 'index.handler',
+    role: lambdaRole
+  });
+
+  bucket.grantRead(lambdaFunction);
+  table.grantReadWriteData(lambdaFunction);
+
+  return lambdaFunction;
 }
 
 
