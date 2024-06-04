@@ -66,7 +66,7 @@ import AWS from 'aws-sdk';
               };
 
            const response = await axios.post(
-             'https://7uv3zpxu83.execute-api.us-east-2.amazonaws.com/default/upload',
+             'https://7uv3zpxu83.execute-api.us-east-2.amazonaws.com/default/file',
              requestBody
            );
 

@@ -9,6 +9,7 @@ import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
 import { RemovalPolicy, CfnOutput } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as path from 'path';
+import { Lambda } from 'aws-cdk-lib/aws-ses-actions';
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -23,10 +24,10 @@ export class CdkAppStack extends cdk.Stack {
     // Create Lambda functions
     const fileUploadLambda = createFileUploadLambda(this, bucket, table.fileUploadTable);
     const generatePreSignedUrlLambda = createGeneratePreSignedUrlLambda(this, bucket);
-    const appCreateVmLambda = createAppCreateVmLambda(this, bucket, table.myFileTable);
+    const appCreateVmLambda = createAppCreateVmLambda(this, bucket, table;
 
     // Create API Gateway
-    const api = createAPIGateway(this, lambdaFunction);
+    const api = createAPIGateway(this, fileUploadLambda, generatePreSignedUrlLambda);
 
     // Create EC2 instance
     const instance = createEC2Instance(this, bucket, table);
@@ -143,6 +144,55 @@ function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: Dyn
   }));
 
   return lambdaFunction;
+}
+
+function createAPIGateway(scope: Construct, fileUploadLambda:lambda.Function, generatePreSignedUrlLambda:lambda.Function): apigateway.RestApi{
+  const api=new apigateway.RestApi(scope, 'FileAPI',  {
+    restApiName: 'FileUploadAPI',
+    description: 'API for file upload and pre-signed URL generation',
+    deployOptions: {
+      stageName: 'default',
+      tracingEnabled: true,
+    },
+    defaultCorsPreflightOptions: { // add cors
+      allowOrigins: apigateway.Cors.ALL_ORIGINS,
+      allowMethods: apigateway.Cors.ALL_METHODS,
+      allowHeaders: apigateway.Cors.DEFAULT_HEADERS,
+    },
+  });
+
+  const fileResource = api.root.addResource('file');
+  const uploadIntegration = new apigateway.LambdaIntegration(fileUploadLambda);
+  const generatePreSignedUrlIntegration = new apigateway.LambdaIntegration(generatePreSignedUrlLambda);
+
+
+  // POST /file
+  const uploadMethod = fileResource.addMethod('POST', uploadIntegration, {
+    methodResponses: [
+      {
+        statusCode: '200',
+        responseModels: {
+          'application/json': apigateway.Model.EMPTY_MODEL,
+        },
+      },
+    ],
+  });
+
+  // POST /file/generate-pre-signed-url
+  const generatePreSignedUrlResource = fileResource.addResource('generate-pre-signed-url');
+  const generatePreSignedUrlMethod = generatePreSignedUrlResource.addMethod('POST', generatePreSignedUrlIntegration, {
+    methodResponses: [
+      {
+        statusCode: '200',
+        responseModels: {
+          'application/json': apigateway.Model.EMPTY_MODEL,
+        },
+      },
+    ],
+  });
+
+  return api;
+
 }
 
 
