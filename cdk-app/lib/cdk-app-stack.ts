@@ -33,6 +33,11 @@ export class CdkAppStack extends cdk.Stack {
 }
 
 
+interface DynamoDBTables {
+  fileUploadTable: dynamodb.Table;
+  myFileTable: dynamodb.Table;
+}
+
 function createS3Bucket(scope: Construct): s3.Bucket {
 
   // L2 construct
@@ -44,4 +49,22 @@ function createS3Bucket(scope: Construct): s3.Bucket {
 
   return bucket;
 }
+
+function createDynamoDBTable(scope: Construct): DynamoDBTables {
+  const fileUploadTable = new dynamodb.Table(scope, 'file-upload', {
+    partitionKey: {name: 'id', type: dynamodb.AttributeType.STRING},
+    stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
+    tableName: 'file-upload'
+  })
+  const myFileTable = new dynamodb.Table(scope, 'MyFile', {
+    partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
+    tableName: 'MyFile'
+  });
+
+  return { fileUploadTable, myFileTable };
+}
+
+
+
+
 
