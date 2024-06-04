@@ -1,12 +1,12 @@
 import * as cdk from 'aws-cdk-lib';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
+import { RemovalPolicy, CfnOutput } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as dynamodb from '@aws-cdk/aws-dynamodb';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as apigateway from '@aws-cdk/aws-apigateway';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as lambdaEventSources from '@aws-cdk/aws-lambda-event-sources';
-import { RemovalPolicy } from 'aws-cdk-lib';
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -36,9 +36,10 @@ export class CdkAppStack extends cdk.Stack {
 function createS3Bucket(scope: Construct): s3.Bucket {
 
   // L2 construct
-  const bucket=new s3.Bucket(scope, 'FileBucket',  {
-    bucketName: '',
-    
+  const bucket=new s3.Bucket(scope, 'fileappbucket',  {
+    bucketName: 'fileappbucket',
+    removalPolicy: RemovalPolicy.DESTROY,
+    autoDeleteObjects: true,
   })
 
   return bucket;
