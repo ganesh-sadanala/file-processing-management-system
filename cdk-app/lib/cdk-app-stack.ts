@@ -114,7 +114,7 @@ function createGeneratePreSignedUrlLambda(scope: Construct, bucket: s3.Bucket):l
   return lambdaFunction
 }
 
-function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: dynamodb.Table): lambda.Function {
+function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: DynamoDBTables): lambda.Function {
   const lambdaRole = new iam.Role(scope, 'GeneratePreSignedUrlLambdaRole', {
     assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
     managedPolicies: [
@@ -132,7 +132,15 @@ function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: dyn
   });
 
   bucket.grantRead(lambdaFunction);
-  table.grantReadWriteData(lambdaFunction);
+  table.myFileTable.grantReadWriteData(lambdaFunction);
+  table.fileUploadTable.grantStreamRead(lambdaFunction);
+
+  // Add DynamoDB event source mapping
+  lambdaFunction.addEventSource(new lambdaEventSources.DynamoEventSource(table.fileUploadTable, {
+    startingPosition: lambda.StartingPosition.LATEST,
+    batchSize: 1,
+    retryAttempts: 3,
+  }));
 
   return lambdaFunction;
 }
