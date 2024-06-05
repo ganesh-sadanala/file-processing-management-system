@@ -13,7 +13,13 @@ import { Lambda } from 'aws-cdk-lib/aws-ses-actions';
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+    super(scope, id, {
+      env: {
+        account: '',
+        region: 'us-east-1',
+      },
+      ...props,
+    });
 
     // Create S3 bucket
     const bucket = createS3Bucket(this);
@@ -117,7 +123,7 @@ function createFileUploadLambda(scope: Construct, bucket: s3.Bucket, table: dyna
   const lambdaFunction=new lambda.Function(scope, 'fileUpload', {
     functionName: 'fileUpload',
     runtime: lambda.Runtime.NODEJS_LATEST,
-    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/fileUpload')),
+    code: lambda.Code.fromAsset(path.join(__dirname, 'dblambda')),
     handler: 'index.handler',
     role: lambdaRole
   })
@@ -141,7 +147,7 @@ function createGeneratePreSignedUrlLambda(scope: Construct, bucket: s3.Bucket):l
   const lambdaFunction = new lambda.Function(scope, 'generatePreSignedUrl', {
     functionName: 'generatePreSignedUrl',
     runtime: lambda.Runtime.NODEJS_LATEST,
-    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/generatePreSignedUrl')),
+    code: lambda.Code.fromAsset(path.join(__dirname, 's3lambda')),
     handler: 'index.handler',
     role: lambdaRole,
   });
@@ -151,7 +157,7 @@ function createGeneratePreSignedUrlLambda(scope: Construct, bucket: s3.Bucket):l
 }
 
 function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: DynamoDBTables): lambda.Function {
-  const lambdaRole = new iam.Role(scope, 'GeneratePreSignedUrlLambdaRole', {
+  const lambdaRole = new iam.Role(scope, 'AppCreateVmLambdaRole', {
     assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
     managedPolicies: [
       iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
@@ -162,7 +168,7 @@ function createAppCreateVmLambda(scope: Construct, bucket: s3.Bucket, table: Dyn
   const lambdaFunction = new lambda.Function(scope, 'appCreateVm', {
     functionName: 'app-create-vm',
     runtime: lambda.Runtime.NODEJS_LATEST,
-    code: lambda.Code.fromAsset(path.join(__dirname, 'lambda/appCreateVm')),
+    code: lambda.Code.fromAsset(path.join(__dirname, 'vmlambda')),
     handler: 'index.handler',
     role: lambdaRole
   });

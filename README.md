@@ -10,14 +10,6 @@
   - Run ```npm install``` on the root directory where the `package.json` file located to install dependencies
   - Run ```npm start``` to start application locally.
 
-**backend**
-- **Description:** This folder contains 3 lambda codes
-  - **s3lambda:** This `Node.js` lambda code runs in Amazon Web Services(AWS) and contains the code to generate pre signed url of s3 bucket.
-    This is done to avoid any AWS access keys or credentials in the code(not in config, not in env, not hardcode, no placeholder, follow best practices).
-  - **dblambda:** This `Node.js` lambda code runs in AWS and contains the code to update dynamodb with the file details.
-  - **vmlambda:** This `Node.js` lambda code runs in AWS and contains the code to create virtual machine(VM) and run the `vmscript.sh` file 
-    to meet the requirements.
-
 **vmscript.sh**
 - **Description:** contains script that runs as a userData script on VM launch on AWS Virtual Private Cloud(VPC).
 
