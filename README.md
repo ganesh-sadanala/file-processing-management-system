@@ -1,5 +1,3 @@
-- Application URL: https://prod.d2ez4eds2hhpye.amplifyapp.com/
-
 ### Repository Guide
 **frontend**
 - **Description:** `React.js` User Interface (UI) code.
@@ -27,13 +25,10 @@
   cdk deploy 
   ```
 - The AWS credentials should be storeed in `~/.aws/credentials` file.
+
 **vmscript.sh**
 - **Description:** contains script that runs as a userData script on VM launch on AWS Virtual Private Cloud(VPC).
 
-
-### AWS Environment video
-- AWS Environment - https://drive.google.com/file/d/1LYgUNL5Fz9qgJRCF2wbaHXdusHn5wWTT/view?usp=sharing
-- AWS IAM - https://drive.google.com/file/d/1ubFH40P57nBSu1KNKYdDwDnhY441a3XM/view?usp=sharing
 
 ### References
 [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html
