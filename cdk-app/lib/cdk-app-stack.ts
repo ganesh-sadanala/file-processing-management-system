@@ -24,19 +24,54 @@ export class CdkAppStack extends cdk.Stack {
     // Create Lambda functions
     const fileUploadLambda = createFileUploadLambda(this, bucket, table.fileUploadTable);
     const generatePreSignedUrlLambda = createGeneratePreSignedUrlLambda(this, bucket);
-    const appCreateVmLambda = createAppCreateVmLambda(this, bucket, table;
+    const appCreateVmLambda = createAppCreateVmLambda(this, bucket, table);
 
     // Create API Gateway
     const api = createAPIGateway(this, fileUploadLambda, generatePreSignedUrlLambda);
 
-    // Create EC2 instance
-    const instance = createEC2Instance(this, bucket, table);
+    // Create VPC
+    const vpc = createVPC(this);
 
-    // Add DynamoDB event source to Lambda function
-    addDynamoDBEventSource(lambdaFunction, table);
+    // Create Security Group
+    const securityGroup = createSecurityGroup(this, vpc);
+
+    // Create Network ACL
+    const networkAcl = createNetworkAcl(this, vpc);
   }
 }
 
+function createVPC(scope: Construct):ec2.Vpc{
+  const vpc = new ec2.Vpc(scope, 'AppVPC', {
+    cidr: '10.1.0.0/16',
+    subnetConfiguration: [
+      {
+        cidrMask: 24,
+        name: 'Public',
+        subnetType: ec2.SubnetType.PUBLIC,
+      }
+    ],
+    vpcName: 'app-vpc'
+  });
+  return vpc;
+}
+
+function createSecurityGroup(scope: Construct, vpc: ec2.Vpc): ec2.SecurityGroup {
+  const securityGroup = new ec2.SecurityGroup(scope, 'SecurityGroup', {
+    vpc,
+    description: 'Security Group for my EC2',
+    allowAllOutbound: true,
+  });
+
+  return securityGroup;
+}
+
+function createNetworkAcl(scope: Construct, vpc: ec2.Vpc): ec2.NetworkAcl {
+  const networkAcl = new ec2.NetworkAcl(scope, 'NetworkAcl', {
+    vpc
+  });
+
+  return networkAcl;
+}
 
 interface DynamoDBTables {
   fileUploadTable: dynamodb.Table;
