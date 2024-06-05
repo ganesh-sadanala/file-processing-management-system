@@ -10,6 +10,23 @@
   - Run ```npm install``` on the root directory where the `package.json` file located to install dependencies
   - Run ```npm start``` to start application locally.
 
+**cdk-code**
+- **Description:** `TypeScript` AWS CDK code
+- **Contents**
+  - lib/cdk-app-stack.ts contains CDK code
+  - lib/dblambda, lib/s3lambda, lib/vmlambda are the `Node.js` lambda used by CDK when deploying.
+- **Set Up to deploy CDK to AWS**
+  ```cdk
+  // creates AWS environment in the specific region
+  cdk boostrap aws://<aws_account_id>/<aws_region> --profile [credential_profile]
+  
+  // converts CDK to cloudformation file
+  cdk synth
+  
+  # deploys the cloudformation stack to AWS environments
+  cdk deploy 
+  ```
+- The AWS credentials should be storeed in `~/.aws/credentials` file.
 **vmscript.sh**
 - **Description:** contains script that runs as a userData script on VM launch on AWS Virtual Private Cloud(VPC).
 

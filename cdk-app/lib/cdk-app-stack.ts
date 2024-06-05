@@ -13,13 +13,7 @@ import { Lambda } from 'aws-cdk-lib/aws-ses-actions';
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, {
-      env: {
-        account: '',
-        region: 'us-east-1',
-      },
-      ...props,
-    });
+    super(scope, id, props);
 
     // Create S3 bucket
     const bucket = createS3Bucket(this);
